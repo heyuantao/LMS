@@ -1,0 +1,88 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+	<div class="container">	
+		<h4 class='page-header'>今日实验安排</h4>
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>周次</th>
+					<th>周</th>
+					<th>节次</th>
+					<th>教师</th>
+					<th>课程名称</th>
+					<th>上课地点</th>
+					<th>值班学生</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- 
+				{% for arange in current_aranges_disp %}
+				<tr>
+					<td>{{forloop.counter}}</td>
+					<td>{{arange.exp_arange.week_order.name}}</td>
+					<td>{{arange.exp_arange.week.name}}</td>
+					<td>{{arange.exp_arange.time_order.name}}</td>
+					<td>{{arange.exp_arange.exp_name.teachers}}</td>
+					<td>{{arange.exp_arange.item_name}}</td>
+					<td>{{arange.exp_arange.location.name}}</td>
+					<td>{{arange.assistant}}</td>
+				</tr>
+				{% endfor %}
+				 -->
+				{% for exp_arange,assistant_arange in current_aranges_disp %}
+				<tr>
+					<td>{{forloop.counter}}</td>
+					<td>{{exp_arange.week_order.name}}</td>
+					<td>{{exp_arange.week.name}}</td>
+					<td>{{exp_arange.time_order.name}}</td>
+					<td>{{exp_arange.exp_name.teachers}}</td>
+					<td>{{exp_arange.item_name}}</td>
+					<td>{{exp_arange.location.name}}</td>
+					<td>{{assistant_arange.student.username}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<h4 class='page-header' style='margin-top:30px'>明日实验安排</h4>
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>周次</th>
+					<th>周</th>
+					<th>节次</th>
+					<th>教师</th>
+					<th>课程名称</th>
+					<th>上课地点</th>
+					<th>值班学生</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for exp_arange,assistant_arange in tomorrow_aranges_disp %}
+				<tr>
+					<td>{{forloop.counter}}</td>
+					<td>{{exp_arange.week_order.name}}</td>
+					<td>{{exp_arange.week.name}}</td>
+					<td>{{exp_arange.time_order.name}}</td>
+					<td>{{exp_arange.exp_name.teachers}}</td>
+					<td>{{exp_arange.item_name}}</td>
+					<td>{{exp_arange.location.name}}</td>
+					<td>{{assistant_arange.student.username}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+	
+{% endblock %}

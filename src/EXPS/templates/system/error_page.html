@@ -1,0 +1,25 @@
+{% extends 'site_base.html' %}
+{% block body %}
+	<h3 class='page_header'>错误信息</h3>
+	<table class='table'>
+		{% if messages %}
+			{% for message in messages %}
+				<tr class={{message.tags}}>
+					<td>{{message}}</td>
+				</tr>
+			{% endfor %}
+		{% endif %}
+	</table>
+	<div class='row'>
+		<div class='pull-right'>
+			<button class="btn btn-primary" id="back" type="button">返回</button>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$("button#back").click(function(){
+				window.history.back(-1)
+			});
+		})
+	</script>
+{% endblock%}

@@ -1,0 +1,131 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<div class='container'>
+<div class='span10 offset1' style='margin-top:30px'>
+	<div class='offset0'>
+		<h2 class='page-header text-center' style='text-align:center'>课程基本信息填写</h2>
+	</div>
+		
+	<div class="row">
+		<div class="span8 offset1" ng-app="App">
+			<form class="form-horizontal" id="exp_form1" action='{% url "exp_edit" exp.id %}' method='post' ng-controller="AppCtrl" name="expEditForm" novalidate role="form">
+				<div class="control-group">
+					<label class="control-label" for="exp_name"><strong>实验名称：</strong></label>
+					<div class="controls">
+                        <input type="text" id="exp_name" name='exp_name'  ng-model="exp_name" ng-init="exp_name='{{exp.exp_name}}'" required>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="exp_theory_class"><strong>所属课程：</strong></label>
+					<div class="controls">
+                        <input type="text" id="exp_theory_class" name='exp_theory_class'  ng-model="exp_theory_class" ng-init="exp_theory_class='{{exp.theory_class}}'" required>
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" for="exp_class_grade"><strong>年级：</strong></label>
+					<div class="controls">
+                        <input type="number" id="exp_class_grade" name="exp_class_grade" ng-model="exp_class_grade" ng-init="exp_class_grade={{exp.student_grade}}" required>
+                        <span class="alert alert-error" ng-show="expEditForm.exp_class_grade.$invalid&&expEditForm.exp_class_grade.$dirty">只能填写数字</span>
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" for="exp_class_subject"><strong>专业：</strong></label>
+					<div class="controls">
+                        <input type="text" id="exp_class_subject" name="exp_class_subject"  ng-model="exp_class_subject" ng-init="exp_class_subject='{{exp.student_subject}}'" required>
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" for="exp_student_num"><strong>班级人数：</strong></label>
+					<div class="controls">
+                        <input type="number" id="exp_student_num" name="exp_student_num" ng-model="exp_student_num" ng-init="exp_student_num={{exp.student_num}}" required>
+                        <span class="alert alert-error" ng-show="expEditForm.exp_student_num.$invalid&&expEditForm.exp_student_num.$dirty">只能填写数字</span>
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" for="exp_teacher"><strong>实验教师：</strong></label>
+					<div class="controls">
+                        <input type="text" id="exp_teacher" name="exp_teacher" ng-model="exp_teacher" ng-init="exp_teacher='{{exp.teachers}}'" required>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="exp_type"><strong>课程类型：</strong></label>
+					<div class="controls">
+                        <select id='exp_type' name='exp_type' ng-model="exp_type" ng-init="exp_type='{{exp.exp_type.abbr}}'" notequal=0>
+							{% for exp_type in exp_type_list %}
+								<option name='exp_type' value='{{exp_type.abbr}}'>{{exp_type.name}}</option>
+							{% endfor %}
+						</select>
+						<span class="alert alert-error" ng-show="expEditForm.exp_type.$error.notequal&&expEditForm.exp_type.$dirty">必须选择课程类型</span>
+						
+					</div>
+				</div>
+            <div id='exp_type_special_information'  ng-show="exp_type==1">
+					<div class="control-group">
+						<label class="control-label" for="exp_other_info"><strong>大纲指定</strong></label>
+						<div class="controls">
+							<input class='span2' type="number" min="0" name="exp_number_by_authority"  ng-model="exp_number_by_authority" ng-init="exp_number_by_authority={{exp.exp_number_by_authority}}" placeholder='实验个数'>
+							<input class='span2' type="number" min="0" name="exp_time_by_authority"  ng-model="exp_time_by_authority" ng-init="exp_time_by_authority={{exp.exp_time_by_authority}}" placeholder='实验学时'>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="exp_other_info"><strong>实际开出</strong></label>
+						<div class="controls">
+							<input class='span2' type="number" min="0" name="exp_number_by_plan" ng-model="exp_number_by_plan" ng-init="exp_number_by_plan={{exp.exp_number_by_plan}}" placeholder='实验个数'>
+							<input class='span2' type="number" min="0" name="exp_time_by_plan" ng-model="exp_time_by_plan" ng-init="exp_time_by_plan={{exp.exp_time_by_plan}}" placeholder='实验学时'>
+						</div>
+					</div>
+				</div>				
+				<div class="control-group">
+					 <label class="control-label" for="exp_other_info"><strong>备注：</strong></label>
+					<div class="controls">
+						<textarea rows="3" id="exp_other_info" name="exp_other_info" ng-model='other_info' ng-init="other_info='{{exp.other_info}}'"
+						placeholder='填写实验环境需求'></textarea>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="need_assistant"><strong>其他信息：</strong></label>
+					<div class="controls">
+						<input id='need_assistant' style='display:inline' type='checkbox' name='need_assistant'  checked='checked'  style='margin-left:10px'>
+						<span class="label label-inverse">是否需要值班助理</span>
+					</div>
+				</div>
+				<div class="offset2" style="margin-top:50px">
+					<button class="btn btn-info" type="submit"  name='action' value='上一步' style='margin-right:90px'>上一步</button>
+					<button class="btn btn-info" type="submit"  name='action' value='下一步' ng-disabled="expEditForm.$invalid">下一步</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+
+    <script>
+        var App=angular.module("App",[]);
+        App.controller("AppCtrl",["$scope",function($scope){
+            $scope.need_assistant="{{exp.need_assistant}}";
+            if($scope.need_assistant=="True") {
+                $scope.need_assistant = true;
+            }
+            if($scope.need_assistant=="False"){
+                $scope.need_assistant = false;
+            }
+        }]);
+            App.directive("notequal",function(){
+            	return{
+            		require:'ngModel',
+            		link:function(scope,ele,attrs,ngModelCtrl){
+            			ngModelCtrl.$parsers.push(function(viewValue){
+            				if(viewValue==attrs.notequal){
+            					ngModelCtrl.$setValidity('notequal',false);
+            				}else{
+            					ngModelCtrl.$setValidity('notequal',true);
+            				}
+            				return viewValue;
+            			})
+            		}
+            	}
+            });
+    </script>
+</div>
+</div>
+{% endblock %}

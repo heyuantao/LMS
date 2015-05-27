@@ -1,0 +1,60 @@
+{% extends 'site_base.html' %}
+{% block body %}
+	<div class="span12" style='margin-left:0px'>
+		<h4 class='page-header' >课程时间安排填写</h4>
+		<div class="offset2">
+			<form class="form-inline" action='{% url 'arange_edit' exp.id %}' method='post'>
+				<div class='' style='margin-left:100px'>
+					<label class="input-small">周次</label>
+					<label class="input-small">周</label>
+					<label class="input-small">节次</label>
+					<label class="input-small">实验名称</label>
+				</div>
+				<br>
+					{% for arange in aranges %}
+					<div class="" style='margin-bottom:10px'>
+						<label class="input-mini">课程{{forloop.counter}}</label>
+						<select class="input-small" name="wo" id="wo{{forloop.counter0}}">
+							{% for week_order in week_order_list %}
+								<option name='{{week_order.name}}' value='{{week_order.abbr}}'>{{week_order.name}}</option>
+							{% endfor %}
+						</select>
+						<select class="input-small" name="w" id="w{{forloop.counter0}}">
+							{% for week in week_list %}
+								<option name='{{week.name}}' value='{{week.abbr}}'>{{week.name}}</option>
+							{% endfor %}
+						</select>
+						<select class="input-small" name="to" id="to{{forloop.counter0}}">
+							{% for time_order in time_order_list %}
+								<option name='{{time_order.name}}' value='{{time_order.abbr}}'>{{time_order.name}}</option>
+							{% endfor %}
+						</select>
+						<input class="input-medium" type="text" id="info{{forloop.counter0}}" name="item_name" value="{{arange.item_name}}" placeholder="">
+						
+						<button class="btn btn-danger" type="submit" name="action" value="删除:{{forloop.counter0}}">删除</button>
+					
+					</div>
+					<script>
+						$(document).ready(function(){
+							$("#wo{{forloop.counter0}}").find('option[value="{{arange.week_order.abbr}}"]').prop("selected",true)
+							$("#w{{forloop.counter0}}").find('option[value="{{arange.week.abbr}}"]').prop("selected",true)
+							$("#to{{forloop.counter0}}").find('option[value="{{arange.time_order.abbr}}"]').prop("selected",true)
+						})
+					</script>
+					{% endfor %}
+					<div class="" style='padding-left:12px'>
+						<button class="btn btn-success offset6" type="submit" id="add_button" name='action' value='添加'>添加</button>			
+					</div>
+					<div class="offset2" style="margin-top:50px">
+						<button class="btn btn-info" type="submit" name='action' value='上一步' style='margin-right:90px'>上一步</button>
+						<button class="btn btn-info" type="submit" name='action' value='下一步'>下一步</button>
+					</div>
+			</form>
+		</div>
+		
+	</div>
+	
+		
+
+
+{% endblock %}

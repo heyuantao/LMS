@@ -1,0 +1,40 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class='container'>
+	<div class='span12' style='margin-top:0px;margin-left:0px'>
+		<h4 class='page-header'>实验室学生助理</h4>
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>学生姓名</th>
+					<th>联系方式</th>
+					<th>邮件</th>
+					<th>值班安排</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for student in students %}
+				<tr>
+					<td>{{forloop.counter}}</td>
+					<td>{{student.username}}</td>
+					<td>{{student.phone}}</td>
+					<td>{{student.email}}</td>
+					<td><a href='{%url 'show_assistant_aranges' student.id %}'>查看</a></td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

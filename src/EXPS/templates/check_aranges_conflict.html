@@ -1,0 +1,45 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<div class='container'>
+	<div class='span12 offset0' style='margin-top:0px;margin-left:0px'>
+		
+		{% if conflicts|length_is:'0' %}
+			<h4 class='page-header'>未发现冲突的课程</h4>
+		{% else %}
+			<h4 class='page-header'>存在时间和地点冲突的课程</h4>
+		{% endif %}
+		
+		
+		{% for conflict_set in conflicts %}
+			<table class='table table-condensed table-bordered'>
+			{% for arange in conflict_set %}
+				{% if forloop.first %}
+					<thead>
+						<tr>
+							<th colspan="10">
+							{{arange.week_order.name}}:{{arange.week.name}}:{{arange.time_order.name}}:{{arange.location.name}}所冲突的课程
+							</th>
+						</tr>
+					</thead>
+				{% endif %}
+					<tbody>
+						<tr>
+							<th>课程信息</th>
+							<td><a href='{% url "arange_info" arange.exp_name.id %}'>{{arange.exp_name.exp_name}}</a></td>
+							<th>所属理论课</th>
+							<td>{{arange.exp_name.theory_class}}</td>
+							<th>学生年级</th>
+							<td>{{arange.exp_name.student_grade}}</td>
+							<th>学生专业</th>
+							<td>{{arange.exp_name.student_subject}}</td>
+							<th>教师</th>
+							<td>{{arange.exp_name.teachers}}</td>
+						</tr>
+					</tbody>
+			{% endfor %}
+			</table>
+		{% endfor %}
+		
+	</div>
+</div>
+{% endblock %}

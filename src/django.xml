@@ -1,0 +1,7 @@
+<uwsgi>
+    <socket>192.168.37.100:9090</socket>
+    <chdir>/var/uwsgi/LMS/</chdir>
+    <pythonpath>/var/uwsgi/LMS/</pythonpath>
+    <module>django_uwsgi</module>
+</uwsgi>
+

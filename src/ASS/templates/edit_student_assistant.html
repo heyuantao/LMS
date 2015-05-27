@@ -1,0 +1,35 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+</style>
+<div class='container'>
+	<div class='span12' style='margin-top:0px;margin-left:0px'>
+		<h4 class='page-header'>实验室助理信息修改</h4>
+		<form class="form-horizontal" action='{% url 'assistant_edit' student.id %}' method="post">
+			<div class='offset2'>
+			  <div class="control-group">
+			    <label class="control-label" for="assistant_name">助理姓名</label>
+			    <div class="controls">
+			      <input type="text" id="assistant_name" name='name' value='{{student.username}}' placeholder="助理姓名">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="phone">电话</label>
+			    <div class="controls">
+			      <input type="text" id="phone" name='phone' value='{{student.phone}}' placeholder="电话">
+			    </div>
+			  </div>
+			  <div class="control-group">
+			    <label class="control-label" for="email">电子邮件</label>
+			    <div class="controls">
+			      <input type="text" id="email" name='email' value='{{student.email}}' placeholder="电子邮件">
+			    </div>
+			  </div>
+		  </div>
+		  <div class='pull-right'>
+		  	<button type="submit" class="btn btn-primary" name='action' value='修改'>确定</button>
+		  </div>
+		</form>
+	</div>
+</div>
+{% endblock %}

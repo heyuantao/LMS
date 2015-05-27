@@ -1,0 +1,53 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+	padding-top:10px;
+	padding-bottom:0px;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class='container'>
+	<div class='span12' style='margin-top:0px;margin-left:0px'>
+		<h4 class='page-header'>{{week_order.name}}值班信息</h4>
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th>节次\周次</th>
+					{% for week in week_list %}
+					<th>{{week.name}}</th>
+					{% endfor %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for arange_in_to in assistant_arange %}
+					<tr>
+					{% for cell in arange_in_to %}
+						{% if cell.label %}
+							<td>{{cell.label}}</td>
+						{% elif cell.null %}
+							<td><input type='text' class='input-small' style="visibility:hidden"></td>
+						{% else  %}
+							<td><input type='text' class='input-small' value='{{cell.student.username}}' readonly></td>
+						{% endif %}
+					{% endfor %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="pagination">
+			<label>周次选择</label>
+		    <ul>
+		    	{% for week_order in week_order_list %}
+			    	<li><a href="{% url 'show_assistant_arange_in_week_mode' week_order.abbr %}">{{week_order.abbr}}</a></li>
+			    {% endfor %}
+		    </ul>
+	    </div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class="container">	
+	<!-- <div class='row'> -->
+	<h4 class='page-header'>查询条件</h4>
+   	<div class='span12'  style='margin-left:0px'>
+   		<div class='well' style='padding-left:20px;padding-top:2px;padding-bottom:2px'>
+   			<div style='margin-top:20px'>
+	       		<form class="form-inline" action='{% url 'search_exps' %}' method='post'>
+	       			<!-- style='border:2px;bordercolor:#000000;border-style:solid;padding:10px' -->
+	       	   		<label><strong>周次:</strong> </label>
+	       	   		<select class='input-small' name='week_order'>
+	       	   			{% for week_order in week_order_list %}
+	       	   				<option name='{{week_order.name}}' value='{{week_order.abbr}}'>{{week_order.name}}</option>
+	       	   			{% endfor %}
+	       	   		</select>
+	       	   		<label style='margin-left:13px'><strong>周:</strong> </label>
+	       	   		<select class='input-small' name='week'>
+	       	   			{% for week in week_list %}
+	       	   				<option name='{{week.name}}' value='{{week.abbr}}'>{{week.name}}</option>
+	       	   			{% endfor %}
+	       	   			</select>
+	       	   		<label><strong>节次:</strong> </label>
+	       	   		<select class='input-small' name='time_order'>
+	       	   			{% for time_order in time_order_list %}
+	       	   				<option name='{{time_order.name}}' value='{{time_order.abbr}}'>{{time_order.name}}</option>
+	       	   			{% endfor %}
+	       	   		</select>
+	       	   		<label><strong>教师:</strong> </label>
+	       	   		<input type='text' name='teachers' class='span2' placeholder='未填写'></input>
+	       	   		<label><strong>班级:</strong> </label>
+	       	   		<input type='text' name='student_subject' class='span2' placeholder='未填写'></input>
+	       	   		<div class='pull-right' style='margin-top:0px'>
+	       	   			<button type='submit' class='btn btn-primary' style='margin-left:20px' name='action' value='查找'>查找</button>
+	       	   		</div>
+	       		</form>
+	       	</div>
+       	</div>
+   	<div>
+
+   	<h4 class='page-header'>检索结果</h4>
+ 	<div class='span12' style='margin-left:0px'>
+ 		<table class='table table-bordered table-condensed table-striped'>
+ 			<thead>
+ 				<tr>
+ 					<th>序号</th>
+ 					<th>周次</th>
+ 					<th>周</th>
+ 					<th>节次</th>
+ 					<th>教师</th>
+ 					<th>专业</th>
+ 					<th>所属课程</th>
+ 					<th>上课地点</th>
+ 					<th>值班学生</th>
+ 				</tr>
+ 			</thead>
+ 			<tbody>
+ 				{% for exp_arange,assistant_arange in disp_aranges %}
+ 				<tr>
+ 					<td>{{forloop.counter}}</td>
+ 					<td>{{exp_arange.week_order.name}}</td>
+ 					<td>{{exp_arange.week.name}}</td>
+ 					<td>{{exp_arange.time_order.name}}</td>
+ 					<td>{{exp_arange.exp_name.teachers}}</td>
+ 					<td>{{exp_arange.exp_name.student_subject}}</td>
+ 					<td>{{exp_arange.exp_name.theory_class}}</td>
+ 					<!--  <td>{{arange.item_name}}</td>-->
+ 					<td>{{exp_arange.location.name}}</td>
+ 					<td>{{assistant_arange.student.username}}</td>
+ 				</tr>
+ 				{% endfor %}
+ 			</tbody>
+ 		</table>
+ 	</div>
+</div>
+	
+{% endblock %}

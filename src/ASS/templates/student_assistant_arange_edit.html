@@ -1,0 +1,68 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+	padding-top:10px;
+	padding-bottom:0px;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class='container'>
+	<div class='span12' style='margin-top:0px;margin-left:0px'>
+		<h4 class='page-header'>{{week_order.name}}值班安排</h4>
+		<form action='{% url 'assistant_arange_edit' week_order.abbr %}' method='post'>
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th>节次\周次</th>
+					{% for week in week_list %}
+					<th>{{week.name}}</th>
+					{% endfor %}
+				</tr>
+			</thead>
+			<tbody>
+				{% for arange_in_to in assistant_arange %}
+					<tr>
+					{% for cell in arange_in_to %}
+						{% if cell.label %}
+							<td>{{cell.label}}</td>
+						{% elif cell.null %}
+							<td><input type='text' class='input-small' style="visibility:hidden"></td>
+						{% else  %}
+							<td>
+								<select class='input-small' name='{{cell.time_order.abbr}}-{{cell.week.abbr}}' id="cell{{cell.time_order.abbr}}-{{cell.week.abbr}}">
+								{% for student in student_assistants %}
+									<option  name='{{student.id}}' value="{{student.id}}">{{student.username}}</option>
+								{% endfor %}
+								</select>
+							</td>
+							<script>
+								$(document).ready(function(){
+									$("#cell{{cell.time_order.abbr}}-{{cell.week.abbr}}").find('option[value="{{cell.student.id}}"]').prop("selected",true)
+								})
+							</script>
+						{% endif %}
+					{% endfor %}
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<div class="pagination">
+		    <ul>
+		    	{% for week_order in week_order_list %}
+			    	<li><a href="{% url 'assistant_arange_edit' week_order.abbr %}">{{week_order.abbr}}</a></li>
+			    {% endfor %}
+		    </ul>
+		    <div class='pull-right'>
+		    	<input class='btn btn-primary' type='submit' name='action' value='保存'>
+		    </div>
+	    </div>
+	    </form>
+	</div>
+</div>
+{% endblock %}

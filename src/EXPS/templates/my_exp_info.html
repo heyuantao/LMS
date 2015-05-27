@@ -1,0 +1,54 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class='container'>
+	<div class='span12 offset0' style='margin-top:0px;margin-left:0px'>
+		<h4 class='page-header'>{{user.username}}的课程</h4>
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>实验名称</th>
+					<!-- <th>实验所属理论课</th> -->
+					<th>学生年级</th>
+					<th>学生专业</th>
+					<th>实验教师</th>
+					<th>课程类型</th>
+					<th>编辑</th>
+					<th>删除</th>
+				</tr>
+			</thead>
+			{% for exp in exps %}
+			<tbody>
+				<tr>
+					<td>{{forloop.counter}}</td>
+					<td><a href='{% url "arange_info" exp.id %}'>{{exp.exp_name}}</a></td>
+					<!-- <td>{{exp.theory_class}}</td> -->
+					<td>{{exp.student_grade}}</td>
+					<td>{{exp.student_subject}}</td>
+					<td>{{exp.teachers}}</td>
+					<td>{{exp.exp_type.name}}</td>
+					<td><a href='{% url 'exp_edit' exp.id %}'>修改</a></td>
+					<td><a href='{% url 'exp_delete' exp.id %}'>删除</a></td>
+				</tr>
+			</tbody>
+			{% endfor %}
+			
+		</table>
+		<div class="pull-right" style="margin-top:10px">
+			<a href='{% url 'exp_add' %}' class="btn btn-info span1" type="button">添加</a>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block foot %}
+{% endblock %}

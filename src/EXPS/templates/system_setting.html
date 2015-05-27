@@ -1,0 +1,71 @@
+{% extends 'site_base.html' %}
+{% block body %}
+{% load staticfiles %}
+{% load system_setting %}
+<div class='container'>
+	<div class='span12 offset0' style='margin-left:0px'>
+		
+		<form class="form-horizontal" id="exp_form1" action='{% url 'system_setting' %}' method='post'>
+			<h3 class='page-header'>系统设置</h3>
+			<div class='control-group'>
+				<label class='control-label'>初始日期</label>
+				<div class='controls'>
+					<div id="sys_date_init" class="input-append">
+					    <input data-format="yyyy-MM-dd" type="text" name='init_date' value='{% system_setting "init_date" %}'></input>
+					    <span class="add-on">
+					      <i data-time-icon="icon-time" data-date-icon="icon-calendar"></i>
+					    </span>
+					</div>
+				</div>
+			</div>
+			<div class='control-group'>
+				<label class='control-label'>学期</label>
+				<div class='controls'>
+					<div id="school_term" class="input-append">
+				    	<input type='text' name='school_term' value='{% system_setting "school_term" %}'></input>
+					</div>
+				</div>
+			</div>
+			<div class='pull-right'>
+				<input type='submit'  class='btn btn-primary' style='' name='action' value='保存'>
+			</div>
+			<br>
+			<h3 class='page-header' style='margin-top:30px'></h3>
+			<h3 class='page-header' style=''>系统初始信息</h3>
+				<div class='control-group'>
+					<label class='control-label'>实验室（房间编号）</label>
+					<div class='controls'>
+						<div id="" class="input-append">
+					    	<input type='text' name='room_list' class="input-xxlarge"  value='{% system_setting 'room_list' %}'  placeholder='多个实验室用分号隔开，例如(08A501;08A502)'></input>
+						</div>
+					</div>
+				</div>
+			<div class='pull-right'>
+				<input type='submit'  class='btn btn-primary' style='' name='action' value='初始化'>
+			</div>
+			<h3 class='page-header' style='margin-top:60px'></h3>
+			<script type="text/javascript">
+			  	$(function() {
+				    $('#sys_date_init').datetimepicker({
+				    	pickTime: false
+			   		});
+			 	});
+			</script>
+			<h5 id="error_status" style="display:inline">
+							{% if messages %}
+								{% for message in messages %}
+									{{message}}
+								{% endfor %}
+						 	{% endif %}
+			</h5>	
+		</form>
+	</div>	
+</div>
+<link rel="stylesheet" type="text/css" media="screen" href=" {{MEDIA_URL}}bootstrap2/css/bootstrap-datetimepicker.min.css ">
+<script type="text/javascript" src="{{MEDIA_URL}}bootstrap2/js/bootstrap-datetimepicker.min.js "></script>
+
+ <!--
+<link rel="stylesheet" type="text/css" media="screen" href="http://202.196.166.180/downloads/CDN/bootstrap2/css/bootstrap-datetimepicker.min.css">
+<script type="text/javascript" src="http://202.196.166.180/downloads/CDN/bootstrap2/js/bootstrap-datetimepicker.min.js"></script>
+-->
+{% endblock %}

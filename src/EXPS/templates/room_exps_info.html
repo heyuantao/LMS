@@ -1,0 +1,47 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+#class_table{
+	font-size:7px;
+	border:1px solid gray;
+	text-align:center;
+}
+</style>
+<script type="text/javascript" src="{{MEDIA_URL}}bootstrap2/js/bootstrap-popover.js"></script>
+<script type="text/javascript" src="{{MEDIA_URL}}bootstrap2/js/bootstrap-tooltip.js"></script>
+<div class='container'>
+	<div class="span12" style='margin-left:0px'>
+		<h4 class='page-header'>实验室{{room}}占用情况</h4>
+		<table class='table table-condensed table-bordered' height='' id="table" border='1'>
+			{% for room_aranges_in_a_week in room_aranges %}
+				{% cycle '#CCEEFF' '#CCFF99' '#FFDDAA' as bg_color silent %}
+				{% for room_aranges_in_a_time_order in room_aranges_in_a_week %}
+					<tr>
+					{% for arange in room_aranges_in_a_time_order %}
+						{% if arange.id %}
+						<td height='5' width='40' style="text-align:center;font-size:8px;padding:0px"  bgcolor=#888888  >
+							<a href="#" id="popover" rel="popover" data-original-title="{{arange.week_order.name}}  {{arange.week.name}}  第{{arange.time_order.name}}" data-content="{{arange.exp_name.teachers}} {{arange.exp_name.student_grade}}级{{arange.exp_name.student_subject}} 《{{arange.exp_name.exp_name}}》">X</a>
+							<a name='{{arange.id}}' id='{{arange.id}}'></a>
+						</td>
+						{% elif arange.label %}
+						<td height='5' width='40' style="text-align:center;font-size:8px;padding:0px"  bgcolor={{bg_color}}>
+							<a href="#" id="popover" >{{arange.label}}</a>
+						</td>	
+						{% else %}
+						<td height='5' width='40' style="text-align:center;font-size:8px;padding:0px"  bgcolor={{bg_color}}>
+							<a href="#" id="popover" ></a>
+						</td>
+						{% endif %}
+					{% endfor %}
+					</tr>
+				{% endfor %}
+			{% endfor %}
+		</table>
+	</div>
+</div>
+<script>
+	$(document).ready(function(){
+		$("a#popover").popover({trigger:'hover'});
+	})
+</script>
+{% endblock %}

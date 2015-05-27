@@ -1,0 +1,33 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+.table td{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class='container'>
+	<h3 class='page-header' style="">出现错误</h3>	
+	{% if messages %}
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th width='60px'>序号</th><th>问题说明</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for message in messages %}
+				<tr class="{{message.tags}}">
+					<td>{{forloop.counter}}</td>
+					<td>{{message}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+</div>
+{% endblock %}

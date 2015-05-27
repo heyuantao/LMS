@@ -1,0 +1,59 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class='container'>
+	<div class='span12' style='margin-top:0px;margin-left:0px'>
+		<h4 class='page-header'>{{assistant.username}}本周值班安排</h4>
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>周次</th>
+					<th>周</th>
+					<th>节次</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for arange in current_week_order_assistant_aranges %}
+				<tr>
+					<td>{{forloop.counter}}</td>
+					<td>{{arange.week_order.name}}</td>
+					<td>{{arange.week.name}}</td>
+					<td>{{arange.time_order.name}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		<h4 class='page-header'>{{assistant.username}}下周值班安排</h4>
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>周次</th>
+					<th>周</th>
+					<th>节次</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for arange in next_week_order_assistant_aranges %}
+				<tr>
+					<td>{{forloop.counter}}</td>
+					<td>{{arange.week_order.name}}</td>
+					<td>{{arange.week.name}}</td>
+					<td>{{arange.time_order.name}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

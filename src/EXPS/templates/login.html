@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+{% load staticfiles %}
+<head>
+	<meta charset="utf-8">
+	<title>实验室课程查询</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link href=" {{MEDIA_URL}}bootstrap2/css/bootstrap.min.css " rel="stylesheet">
+	<script type="text/javascript" src=" {{MEDIA_URL}}bootstrap2/js/jquery-1.11.1.min.js "></script>
+	<script type="text/javascript" src=" {{MEDIA_URL}}bootstrap2/js/bootstrap.min.js "></script>
+</head>
+
+<body>
+<div class="container">
+	<div style="margin-top:130px">
+		<div class="offset2 span7">
+			<div >
+				<h3 class="">用户登录</h3>
+			</div>
+		</div>
+	</div>
+	<div class="row" >
+		<div class="offset2 span7 well" style='padding-top:60px'>
+			<form class="form-horizontal" id="user_login_form" action="{% url 'login' %}" method="post">
+				<div class="control-group">
+					 <label class="control-label" for="username"><strong>用户名：</strong></label>
+					<div class="controls">
+						<input value="hyt" id="username" name="username" type="text">
+					</div>
+				</div>
+				<div class="control-group">
+					 <label class="control-label" for="password"><strong>密码：</strong></label>
+					<div class="controls">
+						<input id="password" name="password" type="password">
+					</div>
+				</div>
+				<div class="control-group">
+					 <!--  <label class="control-label" for="exp_theory_class"><strong>密码：</strong></label>-->
+					<div class="controls">
+						<button type="submit" class="btn btn-primary" name="action" value="登录" id="user_login_button" style="margin-right:10px">登录</button>
+						<button type="submit" class="btn btn-info" name="action" value="取消" id="user_cancel_button" style="margin-right:10px">取消</button>
+						<h5 id="error_status" style="display:inline">
+							{% if messages %}
+									{% for message in messages %}
+										{{message}}
+									{% endfor %}
+							{% endif %}
+						</h5>			
+					</div>
+				</div>				
+			</form>
+		</div>
+	</div>
+	
+	<!--  
+	<div class="row-fluid" id="main_center_parts" style="margin-top:50px">
+			
+	</div>
+	-->
+	
+</div>
+</body>
+</html>

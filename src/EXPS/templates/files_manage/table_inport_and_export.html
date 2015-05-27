@@ -1,0 +1,61 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<div class='row'>
+	<div class='span12'>
+		<h4 class='page-header'>课程信息数据维护</h4>
+		<div class='well' style='padding:50px'>
+			<form action='{% url 'table_import_and_export' %}' method='post' enctype="multipart/form-data">
+				 <div>
+				 	<strong>原始数据文件</strong>
+				 	<input name="file" type="file">  
+				 </div>
+				 <div style='margin-top:30px'>
+					 <div class='pull-left' style=''>
+					 	<input type="submit" name="action" value='上传' class='btn btn-primary'>
+					 	<input type="submit" name="action" value='导入' class='btn btn-info'>
+					 	<input type="submit" name="action" value='下载' class='btn btn-info'>
+					 </div>
+					 <div class='pull-right' style=''>
+					 	<input type="submit" name="action" value='清除' class='btn btn-danger'>
+					 </div>
+					 <input type='text' name='id' value='exp_aranges_table' class='' style="visibility:hidden">
+				</div>
+			</form>
+		</div>
+	</div>
+		<div class='span12'>
+		<h4 class='page-header'>值班信息数据维护</h4>
+		<div class='well' style='padding:30px'>
+			<form action='{% url 'table_import_and_export' %}' method='post' enctype="multipart/form-data">
+				<div>
+				 	<strong>原始数据文件</strong>
+				 	<input name="file" type="file">  
+				</div>
+				<div style='margin-top:30px'>
+					<div class='pull-left' style=''>
+					 	<input type="submit" name="action" value='上传' class='btn btn-primary'>
+					 	<input type="submit" name="action" value='导入' class='btn btn-info'>
+					 	<input type="submit" name="action" value='下载' class='btn btn-info'>
+					</div>
+					<div class='pull-right' style=''>
+					 	<input type="submit" name="action" value='清除' class='btn btn-danger'>
+					</div>
+					<input type='text' name='id' value='assistant_aranges_table' class='' style="visibility:hidden">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<div class='row' style='margin-left:0px'>
+	<h5 class='page-header'>状态</h5>
+	{% if messages %}
+		<table class='table table-bordered table-condensed table-striped'>
+			<tr class='{{message.tags}}'>
+			{% for message in messages %}
+				<td>{{message}}</td>
+			{% endfor %}
+			</tr>
+		</table>
+	{% endif %}
+</div>
+{% endblock %}

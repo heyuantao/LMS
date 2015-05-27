@@ -1,0 +1,44 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class='container'>
+	<div class='span12' style='margin-top:0px;margin-left:0px'>
+		<h4 class='page-header'>实验室所有课程</h4>
+		<table class='table table-bordered table-condensed table-striped'>
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>实验名称</th>
+					<!-- <th>实验所属理论课</th> -->
+					<th>学生年级</th>
+					<th>学生专业</th>
+					<th>实验教师</th>
+					<th>课程类型</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for exp in exps %}
+				<tr>
+					<td>{{forloop.counter}}</td>
+					<td><a href='{% url "arange_info" exp.id %}'>{{exp.exp_name}}</a></td>
+					<!-- <td>{{exp.theory_class}}</td>-->
+					<td>{{exp.student_grade}}</td>
+					<td>{{exp.student_subject}}</td>
+					<td>{{exp.teachers}}</td>
+					<td>{{exp.exp_type.name}}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+{% endblock %}

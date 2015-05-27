@@ -1,0 +1,136 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class="row" id='exp_id'>
+	<div class="span4 offset" >
+		<table class="table table-condensed table-bordered" id="class_info_table">
+			<caption><h4>课程基本信息</h4></caption>
+			<thead>
+				<tr>
+					<th>属性</th>
+					<th>信息</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>课程名称</td>
+					<td>{{exp.exp_name}}</td>
+				</tr>
+				<tr>
+					<td>所属课程</td>
+					<td>{{exp.theory_class}}</td>
+				</tr>
+				<tr>
+					<td>学生年级</td>
+					<td>{{exp.student_grade}}</td>
+				</tr>
+				<tr>
+					<td>学生专业</td>
+					<td>{{exp.student_subject}}</td>
+				</tr>
+				<tr>
+					<td>学生人数</td>
+					<td>{{exp.student_num}}</td>
+				</tr>
+				<tr>
+					<td>任课教师</td>
+					<td>{{exp.teachers}}</td>
+				</tr>
+				<tr>
+					<td>课程类型</td>
+					<td>{{exp.exp_type.name}}</td>
+				</tr>
+				<tr>
+					<td>其他信息</td>
+					<td>{{exp.other_info}}</td>
+				</tr>
+				{% if exp.exp_type.name == "实验" %}
+					<tr>
+						<td>大纲指定</td>
+						<td>{{exp.exp_number_by_authority}}次实验</td>
+					</tr>
+					<tr>
+						<td>大纲指定</td>
+						<td>{{exp.exp_time_by_authority}}个学时</td>
+					</tr>
+					<tr>
+						<td>实际开出</td>
+						<td>{{exp.exp_number_by_plan}}次实验</td>
+					</tr>
+					<tr>
+						<td>实际开出</td>
+						<td>{{exp.exp_time_by_plan}}个学时</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+	</div>
+
+	<div class="span7 pull-right" style='margin-left:0px'>
+		<table class="table table-condensed table-bordered">
+			<caption><h4>课程时间安排为</h4></caption>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>周次</th>
+					<th>周</th>
+					<th>节次</th>
+					<th>课程名称</th>
+					<th>上课地点</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for arange in aranges %}
+					<tr>
+						<td>{{forloop.counter}}</td>
+						<td>{{arange.week_order.name}}</td>
+						<td>{{arange.week.name}}</td>
+						<td>{{arange.time_order.name}}</td>
+						<td>{{arange.item_name}}</td>
+						<td>{{arange.location.name}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div class='span4' style='margin-left:0px'>
+	<table class="table table-condensed table-bordered">
+		<caption><h4>表格检查</h4></caption>
+		<thead>
+			<tr>
+				<th>序号</th>
+				<th>错误说明</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for message in messages %}
+			<tr class='{{message.tags}}'>
+				<td>{{forloop.counter}}</td>
+				<td>{{message}}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+
+<div class='span12' style='margin-left:0px'>
+	<form action='{% url 'exp_aranges_edit_finished' exp.id %}' method='post'>
+		<div class="offset4" style="margin-top:50px">
+			<button class="btn btn-info" type="submit" name='action' value='上一步' style='margin-right:90px'>上一步</button>
+			<button class="btn btn-info" type="submit" name='action' value='确定'>确  定</button>
+		</div>
+	</form>
+</div>
+{% endblock %}

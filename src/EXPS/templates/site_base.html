@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+{% load staticfiles %}
+<head>
+	<meta charset="utf-8">
+	<title>实验室课程查询</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
+		
+	<link href=" {{MEDIA_URL}}bootstrap2/css/bootstrap.min.css " rel="stylesheet">
+	<script type="text/javascript" src=" {{MEDIA_URL}}jquery/dist/jquery.js "></script>
+	<script type="text/javascript" src=" {{MEDIA_URL}}bootstrap2/js/bootstrap.min.js "></script>
+    <script type="text/javascript" src=" {{MEDIA_URL}}angular/angular.js"></script>
+    <!--
+	<script type="text/javascript" src=" {{MEDIA_URL}}bootstrap2/js/jqBootstrapValidation.js "></script>
+	-->
+</head>
+
+<body>
+<div class="container">
+{% block head %}
+		<div class="navbar">
+			<div class="navbar-inner">
+				<a data-target=".navbar-responsive-collapse" data-toggle="collapse" class="btn btn-navbar"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a> 
+				<a href="{% url 'site_main_page' %}" class="brand">CSA</a>
+				<div class="nav-collapse collapse navbar-responsive-collapse">
+					<ul class="nav">
+						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">教室查询<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								{% for exp_location in exp_location_list%}
+									<li>
+										<a href="{% url 'foom_exps_info' exp_location.name %}" id="{{exp_location.name}}">{{exp_location.name}}</a>
+									</li>
+								{% endfor %}
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">课程管理<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								{% if user.is_authenticated %}
+								<li>
+									<a href="{% url 'user_main_page' %}" id='user_show_my_exp'>我的课程</a>
+								</li>
+								{% endif %}
+								<li>
+									<a href="{% url 'site_main_page' %}" id='user_show_all_exp'>所有课程</a>
+								</li>
+								<li>
+									<a href="{% url 'recent_exps' %}" id='show_recent_exps'>近期课程</a>
+								</li>
+								<li>
+									<a href="{% url 'check_aranges_conflict' %}" id='show conflict'>查看冲突</a>
+								</li>
+								<li>
+									<a href="{% url 'search_exps' %}" id='search_exp'>查找课程</a>
+								</li>
+							</ul>
+						</li>
+						
+						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">勤工俭学<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="{% url 'show_assistant' %}" id=''>联系学生助理</a>
+								</li>
+								<li>
+									<a href="{% url 'show_assistant_arange_in_week_mode' 1 %}" id=''>值班安排查看</a>
+								</li>
+								{% if user.is_authenticated %}
+								{% if user.is_superuser %}
+								<li>
+									<a href="{% url 'assistant_edit_and_add' %}" id=''>学生助理管理</a>
+								</li>
+								<li>
+									<a href="{% url 'assistant_arange_check' %}" id=''>修改值班安排</a>
+								</li>
+								{% endif %}
+								{% endif %}
+							</ul>
+						</li>
+
+						{% if user.is_authenticated %}
+						{% if user.is_superuser %}
+						<li class="dropdown">
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">系统管理<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="{% url 'table_import_and_export' %}" id='import table'>导入导出</a>
+								</li>
+								<li>
+									<a href="{% url 'system_setting' %}" id='import table'>系统设置</a>
+								</li>
+							</ul>
+						</li>
+						{% endif %}
+						{% endif %}
+					</ul>
+					<ul class="nav pull-right"> 
+						{% if user.is_authenticated %}
+							{% if user.is_superuser %}
+								<li>
+									<a href="{% url 'user_main_page' %}" id="main_user_login_status">管理员已登录</a>
+								</li>
+							{% else %}
+								<li>
+									<a href="{% url 'user_main_page' %}" id="main_user_login_status">{{user.username}}已登录</a>
+								</li>
+							{% endif %}
+						{% else %}
+						<li>
+							<a href="#" id="main_user_login_status">未登录</a>
+						</li>
+						{% endif%}
+						<li class="divider-vertical">
+						</li>
+						<li class="dropdown">
+							 <a data-toggle="dropdown" class="dropdown-toggle" href="#">管理<strong class="caret"></strong></a>
+							<ul class="dropdown-menu">
+								{% if user.is_authenticated %}
+								<li>
+									<a href="{% url 'logout' %}" id="user_logout_button">退出系统</a>
+								</li>
+								<li>
+									<a href="{% url 'change_password' %}" id="">更改密码</a>
+								</li>
+								{% else %}
+								<li>
+									<a href="{% url 'login' %}" id="main_begin_login_button">登录系统</a>
+								</li>	
+								<li>
+									<a href="{% url 'register' %}" id="register">开始注册</a>
+								</li>
+								{% endif %}
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+{% endblock %}
+
+{% block body %}
+		
+{% endblock %}
+
+{% block foot %}
+<div class='container'>
+	<footer class='footer'>
+		<div class='pull-right' style='margin-top:60px'>
+			<address>
+				<strong>Build on <a href='https://www.djangoproject.com/'>Django</a>,<a href='http://www.bootcss.com/'>Bootstrap</a>,<a href='https://angularjs.org'>AngularJS</a></strong><br>
+				<small>Design and implement by he_yuan_tao@163.com</small>
+			</address>
+		</div>
+	</footer>
+</div>
+{% endblock %}
+</div>
+</body>
+</html>

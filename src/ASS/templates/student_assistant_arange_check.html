@@ -1,0 +1,110 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table th{
+	text-align:center;
+	vertical-align:middle
+}
+.table td{
+	text-align:center;
+	vertical-align:middle
+}
+</style>
+<div class='container'>
+	<div class='span12' style='margin-top:0px;margin-left:0px'>
+		<div class='row'>
+			<div class='span7'>
+				<h4 class='page-header'>课表与值班表检查</h4>
+				<table class='table table-bordered table-condensed table-striped'>
+					<thead>
+						<tr>
+							<th width="60px">序号</th>
+							<th>信息</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for message in messages %}
+						<tr class='{{message.tags}}'>
+							<td>{{forloop.counter}}</td>
+							<td>{{message}}</td>
+						</tr>
+						{% endfor %}
+						{% if not messages %}
+						<tr class='success'>
+							<td>1</td>
+							<td>课表未发现有调整</td>
+						</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			</div>
+			<div class='span4 offset1'>
+				<h4 class='page-header'>变动信息概要</h4>
+				<table class='table table-bordered table-condensed table-striped'>
+					<thead>
+						<tr>
+							<th>添加的课程数目</th>
+							<th>删除的课程数目</th>
+							
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>{{new_aranges|length}}</td>
+							<td>{{delete_aranges|length}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class='pull-right'>
+					<a href='{% url 'assistant_arange_edit' '1' %}' type='button' class='btn btn-primary'>值班安排</a>
+				</div>
+			</div>
+
+		</div>
+		<div class='row'>
+			<div class='span12'>
+				<h4 class='page-header'>新增或删除的实验安排</h4>
+				<table class='table table-bordered table-condensed table-striped'>
+					<thead>
+						<tr>
+							<th>序号</th><th>周次</th><th>周</th><th>节次</th><th>状态</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for arange in new_aranges %}
+							{% if forloop.counter < 10 %}
+								<tr>
+									<td>{{forloop.counter}}</td>
+									<td>{{arange.week_order.name}}</td>
+									<td>{{arange.week.name}}</td>
+									<td>{{arange.time_order.name}}</td>
+									<td>新加</td>
+								</tr>
+							{% elif forloop.counter == 10 %}
+								<td>#</td>
+								<td colspan='4'>存在较多的修改(未显示)</td>
+							{% else %}
+							{% endif %}
+						{% endfor %}
+						{% for arange in delete_aranges %}
+							{% if forloop.counter < 10 %}
+								<tr>
+									<td>{{forloop.counter}}</td>
+									<td>{{arange.week_order.name}}</td>
+									<td>{{arange.week.name}}</td>
+									<td>{{arange.time_order.name}}</td>
+									<td>删除</td>
+								</tr>
+							{% elif forloop.counter == 10 %}
+								<td>#</td>
+								<td colspan='4'>存在较多的修改(未显示)</td>
+							{% else %}
+							{% endif %}
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

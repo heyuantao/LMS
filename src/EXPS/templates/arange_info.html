@@ -1,0 +1,113 @@
+{% extends 'site_base.html' %}
+{% block body %}
+<style>
+.table td{
+	text-align:center;
+	vertical-align:middle;
+}
+.table th{
+	text-align:center;
+	vertical-align:middle;
+}
+</style>
+<div class='container'>
+	<div class='row' style='margin-left:0px'>
+		<h4 class='page-header'>{{exp.exp_name}}:课程基本信息</h4>
+		<div class='span12' style='margin-left:0px'>
+			<table class="table table-bordered table-condensed table-striped">
+				<thead>
+					<tr>
+						<th>实验名称</th>
+						<th>所属理论课</th>
+						<th>学生人数</th>
+						<th>学生年级</th>
+						<th>学生专业</th>
+						<th>教师</th>
+					<tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{exp.exp_name}}</td>
+						<td>{{exp.theory_class}}</td>
+						<td>{{exp.student_num}}</td>
+						<td>{{exp.student_grade}}</td>
+						<td>{{exp.student_subject}}</td>
+						<td>{{exp.teachers}}</td>	
+					</tr>
+				</tbody>
+				<thead>
+					<tr>
+						<th>课程类型</th>
+						<th>是否需要值班助理</th>
+						<th colspan="4">其他信息</th>
+					<tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{exp.exp_type.name}}</td>
+						<td>
+							{% if exp.need_assistant == True %}
+								是
+							{% else %}
+								否
+							{% endif %}
+						</td>
+						<td colspan="4">{{exp.other_info}}</td>
+					</tr>
+				</tbody>
+			</table>
+			{% if exp.exp_type.name == '实验' %}
+				<table class="table table-bordered table-condensed table-striped">
+					<tbody>
+						<tr>
+							<th>教学大纲指定有{{exp.exp_number_by_authority}}个实验，共{{exp.exp_time_by_authority}}学时</th>
+							<th>实际的开设的有{{exp.exp_number_by_plan}}个实验，共{{exp.exp_time_by_plan}}学时</th>
+						</tr>
+					</tbody>
+				</table>
+			{% endif %}
+		</div>
+		<h4 class='page-header'>{{exp.exp_name}}:时间安排</h4>
+		<div class='span12' style='margin-left:0px'>
+			<table class="table table-bordered table-condensed table-striped">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>周次</th>
+						<th>周</th>
+						<th>节次</th>
+						<th>课程名称</th>
+						<th>上课地点</th>
+						<th>值班学生</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for exp_arange,assistant_arange in aranges %}
+					<tr>
+						<td>{{forloop.counter}}</td>
+						<td>{{exp_arange.week_order.name}}</td>
+						<td>{{exp_arange.week.name}}</td>
+						<td>{{exp_arange.time_order.name}}</td>
+						<td>{{exp_arange.item_name}}</td>
+						<td>{{exp_arange.location.name}}</td>
+						<td>{{assistant_arange.student.username}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class='row'>
+		<div class='pull-right' style=''>
+			<button class="btn btn-info" id="back" type="button">返回</button>
+		</div>
+	</div>
+	<script>
+		$(document).ready(function(){
+			$("button#back").click(function(){
+				window.history.back(-1)
+			});
+		})
+	</script>
+</div>
+{% endblock %}
