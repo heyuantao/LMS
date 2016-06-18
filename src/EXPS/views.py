@@ -142,7 +142,7 @@ class Site_Change_Password(View):
 class Site_Register(View):
     templates='register.html'
     def get(self,request):
-        return render_to_response(self.templates)
+        return render_to_response(self.templates,{},RequestContext(request))
     def post(self,request):
         action=request.POST['action']
         if action==u'注册':
